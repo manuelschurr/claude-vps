@@ -8,11 +8,12 @@ It's a **policy layer**: the skills decide *when* to act and report results; the
 
 ## Status
 
-Today the plugin ships one skill:
+Today the plugin ships two skills:
 
 - **`vps-dev-server`** — start/restart a worktree branch's dev server, wait for *real* readiness, and hand back a public URL to test it from any device; plus a memory/idle **resource guard** that warns before spawning under pressure and asks before killing idle servers.
+- **`vps-onboard-project`** — onboard a project onto the box: import an existing GitHub repo or stand up a new one, draft its server config, guide secrets/external setup, and run its first worktree session at a public URL.
 
-Planned next (each its own skill): standing up a **new project** with its worktrees, **importing an existing project** from GitHub, and managing the per-project session layout. The dev-server lifecycle landed first simply because it was the most immediately useful.
+Planned next (each its own skill): the per-project **session grid** (tmux layout), and packaging the one-time host **bootstrap**.
 
 ## Install
 
