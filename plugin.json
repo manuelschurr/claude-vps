@@ -1,0 +1,6 @@
+{
+  "name": "claude-vps",
+  "version": "0.1.0",
+  "description": "Run Claude Code on a VPS: manage projects and worktree dev servers from any device, with a memory/idle resource guard so the box never runs out of RAM.",
+  "author": "Manuel Schurr"
+}
