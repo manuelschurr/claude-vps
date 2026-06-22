@@ -37,10 +37,15 @@ Setup (load the host's public-URL config; never hardcode the domain):
 ## Prerequisites (check up front; stop if missing)
 - `gh auth status` OK; engine present at `$ORCH`; the loopback proxy daemon
   running (`ss -ltn | grep 1337`); the reverse proxy (Caddy) active.
+- The project's toolchain (e.g. `flutter`/`dart`, `node`) is on `PATH`. The engine
+  runs servers with the launching shell's `PATH`, so put the toolchain in
+  `~/.orchestrator/env` (which the setup block above sources). Verify `which <tool>`
+  resolves before spawning, or the build fails with "command not found".
 
 ## Flow 1 — Import an existing GitHub repo
-1. **Acquire** — `gh repo clone <owner/repo> ~/code/<name>` (confirm name; skip if
-   `~/code/<name>` already exists).
+1. **Acquire** — `gh repo clone <owner/repo> ~/code/<name>`. Pick a **hostname-safe**
+   `<name>` (lowercase, hyphens — no underscores or dots), because it becomes a label
+   in the URL host. Confirm the name; skip the clone if `~/code/<name>` exists.
 2. **Inspect** — read the repo to identify each server process (e.g. a web
    frontend, an API backend), its start command, working directory, port, and the
    env/secret KEYS it expects (from non-secret sources). Do NOT open secret files.
@@ -53,11 +58,15 @@ Setup (load the host's public-URL config; never hardcode the domain):
    `.orchestrator/.secrets` and any external setup (dev DB, DNS, OAuth redirect
    URI). Ask the user to fill the secrets; wait for "done"; never look inside.
 5. **On-box infra** — if `*.<project>.<tld>` isn't already served, add a
-   reverse-proxy site block for it (wildcard cert via DNS-01) and reload. Confirm
-   before reloading.
-6. **Spawn + run** — hand off to vps-dev-server: resource pre-check → `spawn` the
-   first session → readiness wait → report the public URL (+ basic_auth reminder;
-   + OAuth redirect-URI note if the app uses OAuth — each session is a distinct host).
+   reverse-proxy site block for it (wildcard cert via DNS-01). After editing the
+   proxy config as root, **re-assert its ownership/permissions** (an edit can reset
+   them so the proxy's service user can't read the file → reload fails), then
+   **validate** the config and reload. Confirm before reloading. Prefer a shared
+   snippet over copying the whole block per project.
+6. **Spawn + run** — hand off to vps-dev-server: resource pre-check → `spawn <name>`
+   the first session (the name, e.g. `1`, becomes the branch + URL label) →
+   readiness wait → report the public URL (+ basic_auth reminder; + OAuth
+   redirect-URI note if the app uses OAuth — each session is a distinct host).
 
 ## Flow 2 — New project (high-level guidance)
 Guide the user to create the repo themselves — from their own template (e.g. a
