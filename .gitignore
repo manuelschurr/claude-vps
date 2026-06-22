@@ -1,3 +1,7 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# Local design docs — kept on disk, not published
+specs/
+plans/
