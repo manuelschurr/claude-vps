@@ -5,3 +5,4 @@ __pycache__/
 # Local design docs — kept on disk, not published
 specs/
 plans/
+.superpowers/
