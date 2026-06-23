@@ -1,6 +1,6 @@
 {
   "name": "claude-vps",
   "version": "0.1.0",
-  "description": "Run Claude Code on a VPS: manage projects and worktree dev servers from any device, with a memory/idle resource guard so the box never runs out of RAM.",
+  "description": "Run Claude Code on a VPS end-to-end: bootstrap the host, onboard projects, test worktree branches at public URLs, and manage a tmux session grid — with a memory/idle resource guard so the box never runs out of RAM.",
   "author": "Manuel Schurr"
 }
