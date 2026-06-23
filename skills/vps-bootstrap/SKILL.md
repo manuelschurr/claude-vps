@@ -58,8 +58,9 @@ If `~/code/worktree-dashboard` is absent, clone it:
 ### E. Caddy
 - Ensure `/etc/caddy/.env` is owned `root:caddy` mode `640` (token already placed by the user).
 - systemd drop-in `/etc/systemd/system/caddy.service.d/override.conf`:
-  `EnvironmentFile=/etc/caddy/.env` and an `ExecStart=` without `--environ`
-  (clear then re-set: `ExecStart=` then `ExecStart=/usr/bin/caddy run --config /etc/caddy/Caddyfile`).
+  `EnvironmentFile=/etc/caddy/.env` and an `ExecStart=` without `--environ` (the
+  packaged unit's `--environ` logs the whole env — including the token — to the journal;
+  drop it). Clear then re-set: `ExecStart=` then `ExecStart=/usr/bin/caddy run --config /etc/caddy/Caddyfile`.
 - Minimal `/etc/caddy/Caddyfile` (a global options block with the user's email only —
   `vps-onboard-project` adds per-project `*.<project>.<domain>` site blocks).
   `chown root:caddy /etc/caddy/Caddyfile && chmod 640`.
@@ -73,6 +74,7 @@ Write `/etc/systemd/system/orchestrator-proxy.service`:
     After=network.target
 
     [Service]
+    User=root
     ExecStart=/usr/bin/python3 /root/code/worktree-dashboard/orchestrator.py proxy -p 1337
     Restart=always
     RestartSec=2
