@@ -45,7 +45,7 @@ Caddy site block.
 
 ## Editing skills
 
-Each `SKILL.md` is markdown policy — keep it domain-free (no `rookpine`/IP/passwords),
+Each `SKILL.md` is markdown policy — keep it domain-free (no host domain/IP/passwords),
 source `~/.orchestrator/env`, and read URLs from `status --json`. After editing, the
 skills are symlinked into `~/.claude/skills/` on the box. `specs/` and `plans/` are
 local design docs, git-ignored — not published.
