@@ -57,6 +57,14 @@ Setup (load the host's public-URL config; never hardcode the domain):
 4. **Secrets + external checklist** — list the secret keys needed for
    `.orchestrator/.secrets` and any external setup (dev DB, DNS, OAuth redirect
    URI). Ask the user to fill the secrets; wait for "done"; never look inside.
+
+### Serve "main" (prototype — no worktrees)
+For a prototype you can serve the project directly at the apex instead of spawning a
+worktree session: run `python3 "$ORCH" spawn main` (runs the servers in `~/code/<project>`
+in place, no worktree), wait for readiness, and report `https://<project>.<tld>`. The
+generic `*.<tld>` block already serves it — no per-project Caddy work. Worktree sessions
+can still be spawned later and coexist with `main`.
+
 5. **On-box infra** — if `*.<project>.<tld>` isn't already served, add a
    reverse-proxy site block for it (wildcard cert via DNS-01). After editing the
    proxy config as root, **re-assert its ownership/permissions** (an edit can reset

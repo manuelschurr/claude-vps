@@ -22,6 +22,10 @@ Always get the actual public URLs from `status --json` (`servers[].url`) rather
 than constructing them — the host's config determines the domain.
 
 ## Test / preview a branch
+> `main` is a reserved session served in place at the apex `https://<project>.<tld>`
+> (no worktree). `restart main` / `kill main` / `status` treat it like any session;
+> `kill main` stops its servers but never removes the checkout.
+
 1. Resource pre-check (see Resource guard) BEFORE starting.
 2. Start it: `python3 "$ORCH" restart <session>` (use `spawn` if it isn't registered yet).
 3. Wait for REAL readiness — not just an open port. Poll `status --json` until the

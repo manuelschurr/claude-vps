@@ -64,6 +64,18 @@ If `~/code/worktree-dashboard` is absent, clone it:
 - Minimal `/etc/caddy/Caddyfile` (a global options block with the user's email only —
   `vps-onboard-project` adds per-project `*.<project>.<domain>` site blocks).
   `chown root:caddy /etc/caddy/Caddyfile && chmod 640`.
+- Add a generic apex block to the Caddyfile so every project's "main" is served at
+  `<project>.<tld>`:
+      *.<tld> {
+          tls { dns cloudflare {env.CF_API_TOKEN} }
+          @backend header_regexp Host -backend\.
+          handle @backend { reverse_proxy 127.0.0.1:1337 }
+          handle { basic_auth { <user> <bcrypt> }
+                   reverse_proxy 127.0.0.1:1337 }
+      }
+  It serves `<project>.<tld>` (frontend) + `<project>-<server>.<tld>` (backend) for all
+  projects under the `*.<tld>` cert. Per-project `*.<project>.<tld>` blocks (added by
+  onboarding) still serve worktree sessions — Caddy uses the most-specific match.
 - `systemctl daemon-reload`; `systemctl enable --now caddy`.
 
 ### F. Reverse-proxy service
