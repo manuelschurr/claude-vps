@@ -20,8 +20,9 @@ mid-conversation with). Re-run it anytime to reattach or pick up new worktrees.
 
 ## Steps
 1. `cd ~/code/<project>` and run `python3 "$ORCH" grid`.
-2. The agent can't attach you to tmux — relay the command it prints:
-   `tmux attach -t <project>` (if you ran it yourself inside tmux, it already switched).
+2. `grid` never attaches/switches for you (that would hijack your tmux client) — it
+   prints the command. Relay it: `tmux attach -t <project>`, or
+   `tmux switch-client -t <project>` if you're already inside tmux.
 
 ## Notes
 - Needs `tmux` installed and at least one spawned worktree (spawn one first if none).
