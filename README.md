@@ -8,13 +8,12 @@ It's a **policy layer**: the skills decide *when* to act and report results; the
 
 ## Status
 
-Today the plugin ships three skills:
+Today the plugin ships four skills:
 
 - **`vps-dev-server`** — start/restart a worktree branch's dev server, wait for *real* readiness, and hand back a public URL to test it from any device; plus a memory/idle **resource guard** that warns before spawning under pressure and asks before killing idle servers.
 - **`vps-onboard-project`** — onboard a project onto the box: import an existing GitHub repo or stand up a new one, draft its server config, guide secrets/external setup, and run its first worktree session at a public URL.
 - **`vps-session-grid`** — bring up or reattach a project's tiled tmux grid (one Claude pane per worktree session); additive and safe to re-run.
-
-Planned next (each its own skill): packaging the one-time host **bootstrap**.
+- **`vps-bootstrap`** — set up a fresh VPS to run claude-vps: install packages, the engine, swap, firewall, the reverse-proxy service, and host config, guiding you through secrets/DNS/domain.
 
 ## Install
 
